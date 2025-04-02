@@ -1,6 +1,8 @@
 from genres.models import Genre
 from rest_framework import generics
 from genres.serializers import GenreSerializers
+from rest_framework.permissions import IsAuthenticated
+from genres.permissions import GenrePermission
 
 # from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import get_object_or_404
@@ -9,6 +11,7 @@ from genres.serializers import GenreSerializers
 
 # Listar e Criar dados:
 class GenreCretaeListView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, GenrePermission)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializers
 
@@ -27,6 +30,7 @@ class GenreCretaeListView(generics.ListCreateAPIView):
 #         return JsonResponse({'id' : new_genre.id, 'name': new_genre.name}, status=201,)
 
 class GenreRetrivieIpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated, GenrePermission)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializers
 
