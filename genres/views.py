@@ -2,20 +2,26 @@ from genres.models import Genre
 from rest_framework import generics
 from genres.serializers import GenreSerializers
 from rest_framework.permissions import IsAuthenticated
-from genres.permissions import GenrePermission
+from core.permissions import GlobalDefaultPermission
+
+
+class GenreCretaeListView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializers
+
+class GenreRetrivieIpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAuthenticated, GlobalDefaultPermission)
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializers
+
+
+# Sem o DRF apenas com p Django puro:
 
 # from django.views.decorators.csrf import csrf_exempt
 # from django.shortcuts import get_object_or_404
 # from django.http import JsonResponse
 # import json
-
-# Listar e Criar dados:
-class GenreCretaeListView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated, GenrePermission)
-    queryset = Genre.objects.all()
-    serializer_class = GenreSerializers
-
-# Sem o DRF apenas com p Django puro:
 
 # @csrf_exempt
 # def genre_create_list_view(request):
@@ -28,14 +34,6 @@ class GenreCretaeListView(generics.ListCreateAPIView):
 #         new_genre = Genre(name=data['name'])
 #         new_genre.save()
 #         return JsonResponse({'id' : new_genre.id, 'name': new_genre.name}, status=201,)
-
-class GenreRetrivieIpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAuthenticated, GenrePermission)
-    queryset = Genre.objects.all()
-    serializer_class = GenreSerializers
-
-
-# Sem o DRF apenas com p Django puro:
 
 # @csrf_exempt
 # def genre_detail_view(request, pk):
