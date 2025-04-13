@@ -1,6 +1,6 @@
 from genres.models import Genre
 from rest_framework import generics
-from genres.serializers import GenreSerializers
+from genres.serializers import GenreSerializer
 from rest_framework.permissions import IsAuthenticated
 from core.permissions import GlobalDefaultPermission
 
@@ -8,13 +8,13 @@ from core.permissions import GlobalDefaultPermission
 class GenreCretaeListView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Genre.objects.all()
-    serializer_class = GenreSerializers
+    serializer_class = GenreSerializer
 
 
 class GenreRetrivieIpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, GlobalDefaultPermission)
     queryset = Genre.objects.all()
-    serializer_class = GenreSerializers
+    serializer_class = GenreSerializer
 
 
 # Sem o DRF apenas com p Django puro:
